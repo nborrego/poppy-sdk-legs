@@ -508,12 +508,12 @@ class poppy_body_gesture():
         :param self:
         :return:
         '''
-        servo_speed = 50
+        servo_speed = 100
         self.move_servo(self.servo_ids['right_ankle'], -127.44, servo_speed)
         self.move_servo(self.servo_ids['right_knee'], -178.42, servo_speed)
         self.move_servo(self.servo_ids['right_bottom_hip'], -26.98, servo_speed)
         self.move_servo(self.servo_ids['right_top_hip'], -123.49, servo_speed) # This one is weird, if it is too far off, default angle does not work
-        time.sleep(.50)
+        time.sleep(1)
 
     # 2/7/2023 New beyond this point
     def set_left_leg_to_neutral(self):
@@ -523,20 +523,28 @@ class poppy_body_gesture():
         :param self:
         :return:
         '''
-        servo_speed = 50
+        servo_speed = 100
         self.move_servo(self.servo_ids['left_ankle'], -58.7, servo_speed)
         self.move_servo(self.servo_ids['left_knee'], -34.5, servo_speed)
         self.move_servo(self.servo_ids['left_bottom_hip'], -78.75, servo_speed)
         self.move_servo(self.servo_ids['left_top_hip'], -56.34, servo_speed)
-        time.sleep(.50)
+        time.sleep(3)
 
     def set_legs_to_neutral(self):
         '''
         By: Nathan Borrego
         :return:
         '''
-        self.set_right_leg_to_neutral()
-        self.set_left_leg_to_neutral()
+        servo_speed = 100
+        self.move_servo(self.servo_ids['right_ankle'], -127.44, servo_speed)
+        self.move_servo(self.servo_ids['left_ankle'], -58.7, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -178.42, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], -34.5, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], -26.98, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_hip'], -78.75, servo_speed)
+        self.move_servo(self.servo_ids['right_top_hip'], -123.49, servo_speed)  # This one is weird, if it is too far off, default angle does not work
+        self.move_servo(self.servo_ids['left_top_hip'], -56.34, servo_speed)
+        time.sleep(3)
 
     def set_right_leg_step(self):
         '''
@@ -544,13 +552,29 @@ class poppy_body_gesture():
         Start a step with the right leg
         :return:
         '''
-        servo_speed = 50
+
 
     def set_left_leg_step(self):
         '''
         By: Nathan Borrego
         :return:
         '''
+        servo_speed = 50
+       #self.move_servo(self.servo_ids['left_bottom_hip'], )
+
+    def set_to_squat(self):
+        '''
+        By: Nathan Borrego
+        :return:
+        '''
+        servo_speed = 100
+        self.move_servo(self.servo_ids['left_ankle'], -90, servo_speed)
+        self.move_servo(self.servo_ids['right_ankle'], -159, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 70, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -68, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_hip'], -130, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], 37, servo_speed)
+        time.sleep(1)
 
 
 
@@ -559,7 +583,11 @@ if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
     #poppyMove.set_to_neutral()
     #poppyMove.set_right_leg_to_neutral()
-    poppyMove.set_left_leg_to_neutral()
+    poppyMove.set_legs_to_neutral()
+    time.sleep(1)
+    for _ in range(3):
+        poppyMove.set_to_squat()
+        poppyMove.set_legs_to_neutral()
     #poppyMove.set_legs_to_neutral()
 
 
