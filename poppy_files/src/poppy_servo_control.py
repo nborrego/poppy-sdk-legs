@@ -4,6 +4,7 @@ Used to control the robot servos
 """
 import pypot.dynamixel
 import time
+import threading
 
 
 class poppy_body_gesture():
@@ -11,7 +12,7 @@ class poppy_body_gesture():
         super().__init__()
         self.dxl_io = pypot.dynamixel.DxlIO('COM7')
         self.emotion = ''
-        self.servo_ids = {'torso_base': 33, 'chest_tilt_left_right': 34, 'chest_tilt_forward_backward': 35,
+        self.servo_ids = {'torso_base': 33, 'chest_tilt_left_right': 35, 'chest_tilt_forward_backward': 34,
                           'neck_left_right': 68, 'neck_up_down': 69, 'left_inner_shoulder': 41,
                           'left_outer_shoulder': 42, 'left_bicep': 43, 'left_elbow': 44, 'right_inner_shoulder': 51,
                           'right_outer_shoulder': 52, 'right_bicep': 53, 'right_elbow': 54, 'left_ankle': 170,
@@ -574,6 +575,19 @@ class poppy_body_gesture():
         self.move_servo(self.servo_ids['right_knee'], -68, servo_speed)
         self.move_servo(self.servo_ids['left_bottom_hip'], -130, servo_speed)
         self.move_servo(self.servo_ids['right_bottom_hip'], 37, servo_speed)
+
+        self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -28, servo_speed)
+        self.move_servo(self.servo_ids['left_inner_shoulder'], -65, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], 71, servo_speed)
+        self.move_servo(self.servo_ids['left_outer_shoulder'], 84, servo_speed)
+        self.move_servo(self.servo_ids['right_outer_shoulder'], -83, servo_speed)
+        self.move_servo(self.servo_ids['left_bicep'], -3, servo_speed)
+        self.move_servo(self.servo_ids['right_bicep'], -4, servo_speed)
+        self.move_servo(self.servo_ids['left_elbow'], -44, servo_speed)
+        self.move_servo(self.servo_ids['right_elbow'], 53, servo_speed)
+        time.sleep(1)
+        self.set_to_neutral()
+        self.set_legs_to_neutral()
         time.sleep(1)
 
 
@@ -581,13 +595,28 @@ class poppy_body_gesture():
 # Temp Code
 if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
-    #poppyMove.set_to_neutral()
-    #poppyMove.set_right_leg_to_neutral()
+
+    poppyMove.set_to_neutral()
     poppyMove.set_legs_to_neutral()
     time.sleep(1)
-    for _ in range(3):
-        poppyMove.set_to_squat()
-        poppyMove.set_legs_to_neutral()
+    poppyMove.set_to_squat()
+    time.sleep(1)
+
+    '''
+    t1 = threading.Thread(target=poppyMove.set_to_wave_one_hand, args=(1, 0,))
+    t2 = threading.Thread(target=poppyMove.set_to_squat, args=())
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    '''
+
+    #poppyMove.set_to_wave_one_hand(1, 0)
+    #poppyMove.set_right_leg_to_neutral()
+    #poppyMove.set_legs_to_neutral()
+    #for _ in range(3):
+    #    poppyMove.set_to_squat()
+    #    poppyMove.set_legs_to_neutral()
     #poppyMove.set_legs_to_neutral()
 
 
