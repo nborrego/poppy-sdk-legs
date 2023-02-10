@@ -538,13 +538,19 @@ class poppy_body_gesture():
         self.set_right_leg_to_neutral()
         self.set_left_leg_to_neutral()
 
-    def right_leg_step(self):
+    def set_right_leg_step(self):
         '''
         By: Nathan Borrego
         Start a step with the right leg
         :return:
         '''
         servo_speed = 50
+
+    def set_left_leg_step(self):
+        '''
+        By: Nathan Borrego
+        :return:
+        '''
 
 
 
