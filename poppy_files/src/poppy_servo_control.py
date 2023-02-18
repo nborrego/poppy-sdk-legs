@@ -502,6 +502,12 @@ class poppy_body_gesture():
 
         self.set_to_neutral()
 
+
+
+
+    '''
+    New code beyond this point
+    '''
     def set_right_leg_to_neutral(self):
         '''
         By: Nathan Borrego
@@ -516,7 +522,6 @@ class poppy_body_gesture():
         self.move_servo(self.servo_ids['right_top_hip'], -123.49, servo_speed) # This one is weird, if it is too far off, default angle does not work
         time.sleep(1)
 
-    # 2/7/2023 New beyond this point
     def set_left_leg_to_neutral(self):
         '''
         By: Nathan Borrego
@@ -553,7 +558,17 @@ class poppy_body_gesture():
         Start a step with the right leg
         :return:
         '''
-
+        servo_speed = 50
+        self.move_servo(self.servo_ids['right_bottom_hip'], 6.98, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -110, servo_speed)
+        self.move_servo(self.servo_ids['right_ankle'], -100, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['right_knee'], -178.43, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['right_bottom_hip'], -26.8, servo_speed)
+        time.sleep(3/4)
+        self.move_servo(self.servo_ids['right_ankle'], -127.44, servo_speed)
+        time.sleep(1)
 
     def set_left_leg_step(self):
         '''
@@ -561,7 +576,44 @@ class poppy_body_gesture():
         :return:
         '''
         servo_speed = 50
-       #self.move_servo(self.servo_ids['left_bottom_hip'], )
+        self.move_servo(self.servo_ids['left_bottom_hip'], -108.75, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 28, servo_speed)
+        self.move_servo(self.servo_ids['left_ankle'], 20, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['left_knee'], -34.5, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['left_bottom_hip'], -78.75, servo_speed)
+        time.sleep(3/4)
+        self.move_servo(self.servo_ids['left_ankle'], -58.7, servo_speed)
+        time.sleep(1)
+
+    def set_walk_cycle(self):
+        '''
+        By: Nathan Borrego
+        :return:
+        '''
+        servo_speed = 50
+        servo_speed = 50
+        self.move_servo(self.servo_ids['right_bottom_hip'], 6.98, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -110, servo_speed)
+        self.move_servo(self.servo_ids['right_ankle'], -100, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['right_knee'], -178.43, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['right_bottom_hip'], -26.8, servo_speed)
+        time.sleep(3/4)
+        self.move_servo(self.servo_ids['right_ankle'], -127.44, servo_speed)
+
+        self.move_servo(self.servo_ids['left_bottom_hip'], -108.75, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 28, servo_speed)
+        self.move_servo(self.servo_ids['left_ankle'], 20, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['left_knee'], -34.5, servo_speed)
+        time.sleep(2)
+        self.move_servo(self.servo_ids['left_bottom_hip'], -78.75, servo_speed)
+        time.sleep(3/4)
+        self.move_servo(self.servo_ids['left_ankle'], -58.7, servo_speed)
+        time.sleep(1)
 
     def set_to_squat(self):
         '''
@@ -591,16 +643,26 @@ class poppy_body_gesture():
         time.sleep(1)
 
 
-
 # Temp Code
 if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
+    #poppyMove.set_right_leg_to_neutral()
+    #poppyMove.set_left_leg_to_neutral()
 
-    poppyMove.set_to_neutral()
+    #poppyMove.set_to_neutral()
+    #poppyMove.set_legs_to_neutral()
+    #time.sleep(1)
+
+    time.sleep(5)
+
+    #poppyMove.set_left_leg_to_neutral()
+    #poppyMove.set_right_leg_to_neutral()
+    #poppyMove.set_right_leg_step()
+    #time.sleep(2)
+    #poppyMove.set_left_leg_step()
+
     poppyMove.set_legs_to_neutral()
-    time.sleep(1)
-    poppyMove.set_to_squat()
-    time.sleep(1)
+    poppyMove.set_walk_cycle()
 
     '''
     t1 = threading.Thread(target=poppyMove.set_to_wave_one_hand, args=(1, 0,))
