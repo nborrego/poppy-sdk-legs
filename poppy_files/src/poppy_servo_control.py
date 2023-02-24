@@ -5,7 +5,8 @@ Used to control the robot servos
 import pypot.dynamixel
 import time
 import threading
-
+import numpy
+import matplotlib.pyplot as plt
 
 class poppy_body_gesture():
     def __init__(self):
@@ -592,8 +593,7 @@ class poppy_body_gesture():
         By: Nathan Borrego
         :return:
         '''
-        servo_speed = 50
-        servo_speed = 50
+        servo_speed = 100
         self.move_servo(self.servo_ids['right_bottom_hip'], 6.98, servo_speed)
         self.move_servo(self.servo_ids['right_knee'], -110, servo_speed)
         self.move_servo(self.servo_ids['right_ankle'], -100, servo_speed)
@@ -642,18 +642,55 @@ class poppy_body_gesture():
         self.set_legs_to_neutral()
         time.sleep(1)
 
+    def set_to_smooth_walk(self):
+        '''
+        By: Nathan Borrego
+        :return:
+        '''
+        AMP = 30
+        FREQ = 0.5
+        t0 = time.time()
+
+        start = 0
+        plotArr = []
+        plotArrT = []
+
+        while True:
+            t = time.time()
+            if (t - t0) > 10:  # how many seconds
+                break
+
+            pos = AMP * numpy.sin(2 * numpy.pi * FREQ * t)
+
+            print("pos: " + str(pos))
+
+            if -0.5 < pos < 0.5:
+                time.sleep(1)
+            elif pos > 0:
+                poppyMove.move_servo(self.servo_ids['left_top_hip'], pos + -56.34, 100)  # -56.34
+                poppyMove.move_servo(self.servo_ids['left_bottom_hip'], pos + -78.75, 100)  # -78.75
+                poppyMove.move_servo(self.servo_ids['left_knee'], pos + -34.5, 100)  # -34.5
+                poppyMove.move_servo(self.servo_ids['left_ankle'], 1/2 * pos + -58.7, 100)  # -58.7
+
+                poppyMove.move_servo(self.servo_ids['right_top_hip'], pos + -123.49, 100)  # -123.49
+                poppyMove.move_servo(self.servo_ids['right_bottom_hip'], pos + -26.98, 100)  # -26.98
+                poppyMove.move_servo(self.servo_ids['right_knee'], -1 * pos + -178.42, 100)  # -178.42
+                poppyMove.move_servo(self.servo_ids['right_ankle'], -1/2 * pos + -127.44, 100)  # -127.44
+            elif pos < 0:
+                poppyMove.move_servo(self.servo_ids['left_top_hip'], pos + -56.34, 100)  # -56.34
+                poppyMove.move_servo(self.servo_ids['left_bottom_hip'], pos + -78.75, 100)  # -78.75
+                poppyMove.move_servo(self.servo_ids['left_knee'], pos + -34.5, 100)  # -34.5
+                poppyMove.move_servo(self.servo_ids['left_ankle'], 1/2 * pos + -58.7, 100)  # -58.7
+
+                poppyMove.move_servo(self.servo_ids['right_top_hip'], pos + -123.49, 100)  # -123.49
+                poppyMove.move_servo(self.servo_ids['right_bottom_hip'], pos + -26.98, 100)  # -26.98
+                poppyMove.move_servo(self.servo_ids['right_knee'], -1 * pos + -178.42, 100)  # -178.42
+                poppyMove.move_servo(self.servo_ids['right_ankle'], -1/2 * pos + -127.44, 100)  # -127.44
+
 
 # Temp Code
 if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
-    #poppyMove.set_right_leg_to_neutral()
-    #poppyMove.set_left_leg_to_neutral()
-
-    #poppyMove.set_to_neutral()
-    #poppyMove.set_legs_to_neutral()
-    #time.sleep(1)
-
-    time.sleep(5)
 
     #poppyMove.set_left_leg_to_neutral()
     #poppyMove.set_right_leg_to_neutral()
@@ -661,8 +698,17 @@ if __name__ == '__main__':
     #time.sleep(2)
     #poppyMove.set_left_leg_step()
 
+    #poppyMove.set_legs_to_neutral()
+    #poppyMove.set_walk_cycle()
+
+    #poppyMove.set_left_leg_to_neutral()
+    time.sleep(2)
     poppyMove.set_legs_to_neutral()
-    poppyMove.set_walk_cycle()
+    poppyMove.set_to_smooth_walk()
+
+    #poppyMove.set_legs_to_neutral()
+    #poppyMove.set_to_squat()
+    #poppyMove.set_walk_cycle()
 
     '''
     t1 = threading.Thread(target=poppyMove.set_to_wave_one_hand, args=(1, 0,))
