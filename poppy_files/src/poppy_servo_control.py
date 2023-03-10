@@ -598,27 +598,7 @@ class poppy_body_gesture():
         By: Nathan Borrego
         :return:
         '''
-        servo_speed = 100
-        self.move_servo(self.servo_ids['right_bottom_hip'], 6.98, servo_speed)
-        self.move_servo(self.servo_ids['right_knee'], -110, servo_speed)
-        self.move_servo(self.servo_ids['right_ankle'], -100, servo_speed)
-        time.sleep(2)
-        self.move_servo(self.servo_ids['right_knee'], -178.43, servo_speed)
-        time.sleep(2)
-        self.move_servo(self.servo_ids['right_bottom_hip'], -26.8, servo_speed)
-        time.sleep(3/4)
-        self.move_servo(self.servo_ids['right_ankle'], -127.44, servo_speed)
 
-        self.move_servo(self.servo_ids['left_bottom_hip'], -108.75, servo_speed)
-        self.move_servo(self.servo_ids['left_knee'], 28, servo_speed)
-        self.move_servo(self.servo_ids['left_ankle'], 20, servo_speed)
-        time.sleep(2)
-        self.move_servo(self.servo_ids['left_knee'], -34.5, servo_speed)
-        time.sleep(2)
-        self.move_servo(self.servo_ids['left_bottom_hip'], -78.75, servo_speed)
-        time.sleep(3/4)
-        self.move_servo(self.servo_ids['left_ankle'], -58.7, servo_speed)
-        time.sleep(1)
 
     def set_to_squat(self):
         '''
@@ -768,15 +748,17 @@ class poppy_body_gesture():
 if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
 
-    time.sleep(3)
+    time.sleep(2)
     poppyMove.set_body_to_neutral()
-    time.sleep(3)
-    #poppyMove.set_to_squat()
-    #poppyMove.set_body_to_neutral()
+    time.sleep(1)
+    poppyMove.set_walk_cycle()
+    time.sleep(1)
+    poppyMove.set_body_to_neutral()
 
     #poppyMove.set_left_leg_step()
     #poppyMove.set_to_T_position()
     #poppyMove.set_to_wave_one_hand(True, False)
+
     '''
     t1 = threading.Thread(target=poppyMove.set_to_wave_one_hand, args=(1, 0,))
     t2 = threading.Thread(target=poppyMove.set_to_squat, args=())
@@ -785,16 +767,6 @@ if __name__ == '__main__':
     t1.join()
     t2.join()
     '''
-
-    #poppyMove.set_to_wave_one_hand(1, 0)
-    #poppyMove.set_right_leg_to_neutral()
-    #poppyMove.set_legs_to_neutral()
-    #for _ in range(3):
-    #    poppyMove.set_to_squat()
-    #    poppyMove.set_legs_to_neutral()
-    #poppyMove.set_legs_to_neutral()
-
-
 
 # To set values in python based on wizard
 # Goal in wizard - 180 = Python value
