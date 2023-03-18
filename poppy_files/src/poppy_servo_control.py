@@ -92,7 +92,8 @@ class poppy_body_gesture():
         print('servo_speed = 100')
 
         for i in range(len(self.position_list)):
-            print(f"self.move_servo(self.servo_ids['{keys[i]}'],{self.position_list[i]}, servo_speed)")
+            if keys[i] != 'left_inner_shoulder' and keys[i] != 'right_inner_shoulder':
+                print(f"self.move_servo(self.servo_ids['{keys[i]}'],{self.position_list[i]}, servo_speed)")
 
     def set_to_idle_position(self):
         """
@@ -607,17 +608,12 @@ class poppy_body_gesture():
         :return:
         '''
         servo_speed = 150
-        self.move_servo(self.servo_ids['right_ankle'], -65, servo_speed)
-        self.move_servo(self.servo_ids['right_knee'], -10, servo_speed)
-        self.move_servo(self.servo_ids['right_bottom_hip'], -10, servo_speed)
-        self.move_servo(self.servo_ids['back_top_pelvis'], -70, servo_speed)
-        self.move_servo(self.servo_ids['right_bottom_pelvis'], -120, servo_speed)
-        self.move_servo(self.servo_ids['left_bottom_pelvis'], -65, servo_speed)
-        #self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -22, servo_speed)
-        #print()
-        #self.move_servo(self.servo_ids['left_outer_shoulder'], )
-        #self.move_servo(self.servo_ids['right_outer_shoulder'], )
-        time.sleep(1)
+        # Stage 1
+
+        time.sleep(.5)
+
+        # Stage 2
+
 
     def set_to_squat(self):
         '''
@@ -639,7 +635,7 @@ class poppy_body_gesture():
         self.move_servo(self.servo_ids['left_bottom_hip'], goalPos(75.23), servo_speed)
         self.move_servo(self.servo_ids['left_top_hip'], goalPos(131.04), servo_speed)
         self.move_servo(self.servo_ids['left_ankle'], goalPos(37.53), servo_speed)
-        self.move_servo(self.servo_ids['left_knee'], goalPos(47.37), servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], goalPos(55), servo_speed)  # goalPos(47.37)
         self.move_servo(self.servo_ids['right_bottom_hip'], goalPos(185.63), servo_speed)
         self.move_servo(self.servo_ids['right_top_hip'], goalPos(56.25), servo_speed)
         self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(63.02), servo_speed)
@@ -651,8 +647,8 @@ class poppy_body_gesture():
 
         servo_speed = 80
         time.sleep(.5)
-        self.move_servo(self.servo_ids['left_inner_shoulder'], goalPos(139.31), servo_speed)
-        self.move_servo(self.servo_ids['right_inner_shoulder'], goalPos(218.14), servo_speed)
+        self.move_servo(self.servo_ids['left_inner_shoulder'], goalPos(112.60), 150)  # goalPos(139.31)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], goalPos(245.014), 150)  # goalPos(218.14)
         self.move_servo(self.servo_ids['chest_tilt_forward_backward'], goalPos(178.33), servo_speed)
         self.move_servo(self.servo_ids['chest_tilt_left_right'], goalPos(180.79), servo_speed)
         self.move_servo(self.servo_ids['forward_top_pelvis'], goalPos(129.08), servo_speed)
@@ -660,12 +656,19 @@ class poppy_body_gesture():
         time.sleep(1)
         #self.set_body_to_neutral()
 
-    def set_body_to_neutral(self):
+    def set_body_to_neutral(self, arms_free):
         '''
         By: Nathan Borrego
         :return:
         '''
         servo_speed = 100
+
+        if arms_free:
+            self.dxl_io.disable_torque([self.servo_ids['right_inner_shoulder'], self.servo_ids['left_inner_shoulder']])
+        else:
+            self.move_servo(self.servo_ids['left_inner_shoulder'], -3.03, servo_speed)
+            self.move_servo(self.servo_ids['right_inner_shoulder'], 2.59, servo_speed)
+
         self.move_servo(self.servo_ids['left_ankle'], -125.8, servo_speed)  # -127.44
         self.move_servo(self.servo_ids['right_ankle'], -54.8, servo_speed)  # -58.7
         self.move_servo(self.servo_ids['left_knee'], -178.42, servo_speed)
@@ -673,22 +676,19 @@ class poppy_body_gesture():
         self.move_servo(self.servo_ids['right_bottom_hip'], -26.98, servo_speed)
         self.move_servo(self.servo_ids['left_bottom_hip'], -74.79, servo_speed)
         self.move_servo(self.servo_ids['right_top_hip'], -123.49, servo_speed)  # This one is weird, if it is too far off, default angle does not work
-        self.move_servo(self.servo_ids['left_top_hip'], -49.34, servo_speed)
+        self.move_servo(self.servo_ids['left_top_hip'], goalPos(126.83), servo_speed)  # -49.34
         self.move_servo(self.servo_ids['right_bottom_pelvis'], -117.95, servo_speed)
         self.move_servo(self.servo_ids['left_bottom_pelvis'], -55.99, servo_speed)
         self.move_servo(self.servo_ids['forward_top_pelvis'], -34.01, servo_speed)
         self.move_servo(self.servo_ids['back_top_pelvis'], -77.43, servo_speed)
-
         self.move_servo(self.servo_ids['torso_base'], -137.02, servo_speed)  # Changed neutral from prior base value
         self.move_servo(self.servo_ids['chest_tilt_left_right'], .97, servo_speed)
         self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -.79, servo_speed)
         self.move_servo(self.servo_ids['neck_left_right'], 7.56, servo_speed)
         self.move_servo(self.servo_ids['neck_up_down'], .35, servo_speed)  # 60.25
-        self.move_servo(self.servo_ids['left_inner_shoulder'], -3.03, servo_speed)
         self.move_servo(self.servo_ids['left_outer_shoulder'], 79.16, servo_speed)
         self.move_servo(self.servo_ids['left_bicep'], 1.45, servo_speed)
         self.move_servo(self.servo_ids['left_elbow'], .44, servo_speed)
-        self.move_servo(self.servo_ids['right_inner_shoulder'], 2.59, servo_speed)
         self.move_servo(self.servo_ids['right_outer_shoulder'], -82.77, servo_speed)
         self.move_servo(self.servo_ids['right_bicep'], -1.63, servo_speed)
         self.move_servo(self.servo_ids['right_elbow'], .26, servo_speed)
@@ -792,16 +792,21 @@ class poppy_body_gesture():
 if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
 
-    time.sleep(2)
-    poppyMove.set_body_to_neutral()
-    time.sleep(5)
-    poppyMove.set_to_squat()
     time.sleep(1)
-    #poppyMove.set_body_to_neutral()
+    poppyMove.set_body_to_neutral(False)
+    time.sleep(5)
+    #poppyMove.set_walk_cycle()
+    poppyMove.set_to_squat()
+
+    poppyMove.pose_generator()
 
     #poppyMove.set_left_leg_step()
     #poppyMove.set_to_T_position()
     #poppyMove.set_to_wave_one_hand(True, False)
+
+    # while True:
+    #    if 0 < poppyMove.get_servo_position(41) + 180 < 90:
+    #        poppyMove.move_servo(51, goalPos(270), 50)
 
     '''
     t1 = threading.Thread(target=poppyMove.set_to_wave_one_hand, args=(1, 0,))
