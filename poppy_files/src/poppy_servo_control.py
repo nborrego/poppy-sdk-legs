@@ -56,6 +56,7 @@ class poppy_body_gesture():
         """
         self.dxl_io.set_moving_speed({servo_id: servo_speed})
         self.dxl_io.set_goal_position({servo_id: servo_position})
+        self.dxl_io.set_moving_speed()
 
     def get_servo_position(self, servo_id):
         """
@@ -799,7 +800,6 @@ if __name__ == '__main__':
     poppyMove.set_to_squat()
 
     poppyMove.pose_generator()
-
     #poppyMove.set_left_leg_step()
     #poppyMove.set_to_T_position()
     #poppyMove.set_to_wave_one_hand(True, False)
