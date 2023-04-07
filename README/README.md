@@ -29,6 +29,8 @@ You will also need the following hardware (which should still be with Poppy...).
 
 + [Dynamixel MX64T](https://www.robotis.us/dynamixel-mx-64t/)
 
++ [Dynamixel MX64AT](https://www.robotis.us/dynamixel-mx-64at/)
+
 + [Robotis U2D2](https://www.robotis.us/u2d2/)
 
 + [12V 5A 60W Power Supply](https://www.robotis.us/smps-12v-5a-ps-10-us-110v/)
@@ -54,7 +56,7 @@ First, click scan on the Wizard. The Wizard will scan all servo IDs and all baud
 It is important to note that servos with the *same* ID **cannot** be displayed in the Wizard at the same time. All servo IDs **must** be unique to be scan-able and usable. **If you are integrating new servos into the system, you *MUST* scan in each new servo individually into the Wizard and change its ID to a new and unique ID before trying to use these servos together with existing or other new servos. All servos start with an ID of 1, so set it to something else and do not set it to an existing ID. A list of all used IDs for this project can be found below. Note that this can be tedious to do, and you may have to set temporary IDs on a servo in order to get it to what you want especially when swapping the IDs of servos.**
 <br/><br/>
 #### 1.1 Important Notes about Dynamixel Wizard and Servos
-+ It is important to understand how the Dynamixel Wizard controls the servos so here are a few notes to be aware of. 
+It is important to understand how the Dynamixel Wizard controls the servos so here are a few notes to be aware of. 
 
 + The servos in the Wizard operate on a 0&deg; to 360&deg; system. 
 
@@ -79,22 +81,36 @@ Then, you will need to create a dxl.io object using:
 dxl_io = pypot.dynamixel.DxlIO('COM7')
 ```
 
-The name "dxl_io" can be anything you want. COM7 referes to the USB communication port, be aware that COM7 is what was used during this project and may be different in the future.
+The name "dxl_io" can be anything you want. COM7 referes to the USB communication port, be aware that COM7 is what was used during this project and may be different in the future as COM7 was not used by the previous team and had to be changed.
 
 This "dxl_io" object allows you to access any of the functions that these servos have that can be controlled through the Dynamixel Wizard. This section will cover the ones that were used during the project, but there are more than that.
 
-To set the speed of the servo, which ranges from 0-250, use this method where servo_id is the ID of the servo as it corresponds to the Wizard, and servo_speed is from 0-250.
+To set the speed of the servo use this method where servo_id is the ID of the servo as it corresponds to the Wizard, and servo_speed is from 0-250.
 ```python
 dxl_io.set_moving_speed({servo_id: servo_speed})
 ```
 
 To set the position of the servo, use this method where servo_id is the ID of the servo as it corresponds to the Wizard.
 
-servo_position in python code requires a bit more explanation.
+Servo positioning in python code requires a bit more explanation.
 ```python
 dxl_io.set_goal_position({servo_id: servo_position})
 ```
-TODO: Servo position explanation
+
+In the Dynamixel Wizard, the servos operate on 0&deg; to 360&deg;, with 0&deg; starting at the bottom of the presented circle in the Wizard and going counter clock-wise until 360&deg; is reach on the opposite side of the bottom of the circle. The boundary that the servos cannot cross is at the bottom of this circle. When controlling the servos with pypot, you will not be using 0&deg; to 360&deg;, instead the pypot library uses +180&deg; to -180&deg; with 0&deg; being the top of the circle in the Wizard. The left hemisphere of the circle is 0&deg; to +180&deg; and the right hemisphere is 0&deg; to -180&deg;. This means that if you want to take an angle position value from the Wizard and use it to set the position using pypot, you must subtract the Wizard angle value by 180&deg;.
+
+For example, if we want to set a servo to position 137.65&deg; in the Wizard we would do the following in the code:
+
+```python
+servo_position = 137.72-180  # 137.72-180 = -42.28
+dxl_io.set_goal_position({servo_id: servo_position})
+```
+
+This corresponds to this position in the Wizard: 
+
+![img.png](img.png)
+
+
 
 
 ## Documentation

@@ -56,7 +56,6 @@ class poppy_body_gesture():
         """
         self.dxl_io.set_moving_speed({servo_id: servo_speed})
         self.dxl_io.set_goal_position({servo_id: servo_position})
-        self.dxl_io.set_moving_speed()
 
     def get_servo_position(self, servo_id):
         """
@@ -93,7 +92,7 @@ class poppy_body_gesture():
         print('servo_speed = 100')
 
         for i in range(len(self.position_list)):
-            if keys[i] != 'left_inner_shoulder' and keys[i] != 'right_inner_shoulder':
+            if keys[i] != 'left_inner_shoulder' and keys[i] != 'right_inner_shoulder': # Exclude shoulders as we are freeing them
                 print(f"self.move_servo(self.servo_ids['{keys[i]}'],{self.position_list[i]}, servo_speed)")
 
     def set_to_idle_position(self):
@@ -792,14 +791,20 @@ class poppy_body_gesture():
 
 if __name__ == '__main__':
     poppyMove = poppy_body_gesture()
+    #io = pypot.dynamixel.DxlIO('COM7')
+
+    #io.set_goal_position({2: 40})
 
     time.sleep(1)
-    poppyMove.set_body_to_neutral(False)
+    poppyMove.set_body_to_neutral(True)
     time.sleep(5)
     #poppyMove.set_walk_cycle()
-    poppyMove.set_to_squat()
+    #poppyMove.set_to_squat()
 
-    poppyMove.pose_generator()
+
+
+
+    #poppyMove.pose_generator()
     #poppyMove.set_left_leg_step()
     #poppyMove.set_to_T_position()
     #poppyMove.set_to_wave_one_hand(True, False)
