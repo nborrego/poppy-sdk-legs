@@ -23,11 +23,11 @@ This software allows the user to scan and configure Dynamixel Motors from Roboti
 
 You will also need the following hardware (which should still be with Poppy...).
 
-+ [Dynamixel MX28T](https://www.robotis.us/dynamixel-mx-28t/)
++ [Dynamixel MX28T](https://www.robotis.us/dynamixel-mx-28t/) ([MX28 Series Manual](https://emanual.robotis.com/docs/en/dxl/mx/mx-28/))
 
 + [Dynamixel MX28AT](https://www.robotis.us/dynamixel-mx-28at/)
 
-+ [Dynamixel MX64T](https://www.robotis.us/dynamixel-mx-64t/)
++ [Dynamixel MX64T](https://www.robotis.us/dynamixel-mx-64t/) ([MX64 Series Manual](https://emanual.robotis.com/docs/en/dxl/mx/mx-64/))
 
 + [Dynamixel MX64AT](https://www.robotis.us/dynamixel-mx-64at/)
 
@@ -51,7 +51,7 @@ All this hardware is what was used during this project.
 ### 1. Using Dynamixel Wizard
 The Dynamixel Wizard allows you to scan for servos on a USB COM port. To start, make sure you have the [Robotis U2D2](https://www.robotis.us/u2d2/) connected to your computer via USB. From here, connect a TTL cable from the U2D2 to a servo. Also, connect the power brick to the [U2D2 Power Hub Board Set](https://www.robotis.us/u2d2-power-hub-board-set/) and connect the U2D2 Power Hub Board Set TTL to the servo as well. With the U2D2 and the Power Hub both connected by TTL to the servo, you will be able to scan the servo on the Wizard.
 
-First, click scan on the Wizard. The Wizard will scan all servo IDs and all baud rates to start with. You can change what IDs and baud rates to scan under Options > Scan. If you have a servo connected, once the scan is complete, you will see the servo and its ID show up on the left on the Wizard. You can click on the servo to see all the information and options for that servo. It is important to remember that each servo has an ID and a baud rate.
+First, click scan on the Wizard. The Wizard will scan all servo IDs and all baud rates to start with. You can change what IDs and baud rates to scan under Options > Scan. If you have a servo connected, once the scan is complete, you will see the servo and its ID show up on the left on the Wizard. You can click on the servo to see all the information and options for that servo. It is important to remember that each servo has a unique ID and a set baud rate.
 
 It is important to note that servos with the *same* ID **cannot** be displayed in the Wizard at the same time. All servo IDs **must** be unique to be scan-able and usable. **If you are integrating new servos into the system, you *MUST* scan in each new servo individually into the Wizard and change its ID to a new and unique ID before trying to use these servos together with existing or other new servos. All servos start with an ID of 1, so set it to something else and do not set it to an existing ID. A list of all used IDs for this project can be found below. Note that this can be tedious to do, and you may have to set temporary IDs on a servo in order to get it to what you want especially when swapping the IDs of servos.**
 <br/><br/>
@@ -60,11 +60,13 @@ It is important to understand how the Dynamixel Wizard controls the servos so he
 
 + The servos in the Wizard operate on a 0&deg; to 360&deg; system. 
 
-+ The middle and right pane of Dynamixel Wizard are interactable and allow you to change some values if you so desire. This can be unclear when first starting to use the Wizard. When interacting with a servo in joint mode, the red line is the goal position of the servo, while the green line is the actual position of the servo. The backing grey "circle" is the allowed limits on the angles of the servo. These angle limits can be changed, you will see them listed in the middle pane of the Wizard. It may prove useful to set angle limits so that you can more readily see where the servo can be, but be warned that they can also be misleading based to how the actual physical system works.
++ The middle and right pane of Dynamixel Wizard are interactable and allow you to change some values if you so desire. We found this to be unclear when first starting to use the Wizard. When interacting with a servo in joint mode, the red line is the goal position of the servo, while the green line is the actual position of the servo. The backing grey "circle" is the allowed limits on the angles of the servo. These angle limits can be changed, you will see them listed in the middle pane of the Wizard. It may prove useful to set angle limits so that you can more readily see where the servo can be, but be warned that they can also be misleading based to how the actual physical system works.
 
 + The servos ***will not*** cross the 360&deg; -> 0&deg; boundary and vice versus. This means that a servo trying to go from a postion of 26&deg; to 354&deg; ***will not*** take the short path by crossing 0&deg;. This can cause erratic behavior in the physical system if you are not careful with the initial positioning of servos when the system is built. It is important to make sure that the servos will never cross this boundary on their desired swinging path.
 
-+ When the torque on a joint servo is **on**, the servo is locked and cannot free swing. Click the torque **off** will alow the servo to freely swing. This can be controlled by code which will be covered.
++ When the torque on a joint servo is **on**, the servo is locked and cannot freely swing. Click the torque **off** will alow the servo to freely swing. This can be controlled by code which will be covered.
+
++ There are alarms at the bottom of the Wizard which can alert you to issues that the motors may be having. The most important one is the "overload" alarm. If this is red and counting up then the servo will no longer respond to commands and power **must** be disconnected and reconnected to reset the motor.
 
 ### 2. Controlling Servos with Python
 This project uses the [pypot.dynamixel library](https://github.com/poppy-project/pypot) to control the Dynamixel servos. 
@@ -99,20 +101,46 @@ dxl_io.set_goal_position({servo_id: servo_position})
 
 In the Dynamixel Wizard, the servos operate on 0&deg; to 360&deg;, with 0&deg; starting at the bottom of the presented circle in the Wizard and going counter clock-wise until 360&deg; is reach on the opposite side of the bottom of the circle. The boundary that the servos cannot cross is at the bottom of this circle. When controlling the servos with pypot, you will not be using 0&deg; to 360&deg;, instead the pypot library uses +180&deg; to -180&deg; with 0&deg; being the top of the circle in the Wizard. The left hemisphere of the circle is 0&deg; to +180&deg; and the right hemisphere is 0&deg; to -180&deg;. This means that if you want to take an angle position value from the Wizard and use it to set the position using pypot, you must subtract the Wizard angle value by 180&deg;.
 
-For example, if we want to set a servo to position 137.65&deg; in the Wizard we would do the following in the code:
+For example, if we want to set a servo to position 137.65&deg; in the Wizard, and move it, there we would do the following in the code:
 
 ```python
 servo_position = 137.72-180  # 137.72-180 = -42.28
+servo_speed = 50  # Example speed
+dxl_io.set_moving_speed({servo_id: servo_speed})
 dxl_io.set_goal_position({servo_id: servo_position})
 ```
 
-This corresponds to this position in the Wizard: 
+Another command that was used was the ability to disable the torque and allow the motor to freely swing from the Python code.
 
-![img.png](img.png)
+```python
+dxl_io.disable_torque([servo_id1, servo_id2, ...])
+```
 
-
-
+The preceding example demonstrates that the functions you can do with the Wizard can be done in Python as well. It is worth your time to go through [pypot.dynamxiel.io.io.py](https://github.com/poppy-project/pypot/blob/master/pypot/dynamixel/io/io.py) and [pypot.dynamixel.io.abstract_io.py](https://github.com/poppy-project/pypot/blob/master/pypot/dynamixel/io/abstract_io.py) to learn what functions are available to use and how to use them. The ```dxl_io``` object is created using the ```DxlIO``` class from io.py which inherits from the ```AbstractDxlIO``` class in abstract_io.py.
 
 ## Documentation
+### 0. Setup
+Though it is useful to understand the underlying structure behind this code, we and the team before us have written our own code to streamline the programming of the servos. This section will cover how we controlled the servos using the previous teams code as well as our own additions to their code. We will start with a brief overview of the previous team's functions and how we used them. For documentation of the previous team's code, please visit this [link](https://github.com/chenson399/poppy-sdk).
 
+We made full use of the suite of functions written by the previous team in [poppy_servo_control.py](https://github.com/nborrego/poppy-sdk-legs/blob/master/src/poppy_servo_control.py) during development. To start, we created a Poppy object with following code:
 
+```python
+import pypot.dynamixel
+poppyMove.poppy_body_gesture()
+```
+
+This ```poppyMove``` object is used to be able to run functions in main.
+
+The poppy_body_gesture class is the class written by the Poppy Social Robotics SDK team. This class initializes the USB COM port as well as a dictionary of servo IDs corresponding to a descriptive name of its physical position on Poppy for easier calling in functions. One of the most used functions within this class is the ```move_servo``` function. This streamlines the process of moving a servo at a certain speed to a certain position. Here is an example of usage within the class as well as using the dictionary for servo IDs:
+
+```python
+servo_speed = 50
+self.move_servo(self.servo_ids['left_shoulder'], -45, servo_speed)
+```
+
+This is how all the movement of the servos is done. Writing these line by line can take a lot of time and can be tedious. Thanks to the last team, however, there is a function to streamline this process. We made use of the ```pose_generator()``` function they made which will print to console these ```self.move_servo()``` lines with the servo IDs and current position of the servo filled in, as well as a servo_speed placeholder. Using this function, all we needed to do was to set Poppy to the desired position with physical or Wizard manipulation of the servos, and then while holding Poppy in that postion, call ```poppyMove.pose_generator()``` to get a print out of the required code to reach the desired position. This allowed us to rapidly try out different positions of Poppy.
+
+### 1. New Functions in Poppy SDK Legs
+This SDK contains many new functions focused on legs functionality for Poppy. This section will cover each function.
+
+#### 

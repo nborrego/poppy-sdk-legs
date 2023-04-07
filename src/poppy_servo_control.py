@@ -513,13 +513,9 @@ class poppy_body_gesture():
 
         self.set_to_neutral()
 
-
-
-
     '''
-    New code beyond this point
+    Code beyond this point written by Nathan Borrego, Helen Guerro, James Gray
     '''
-
     def set_right_leg_to_neutral(self):
         '''
         By: Nathan Borrego
