@@ -120,7 +120,7 @@ The preceding example demonstrates that the functions you can do with the Wizard
 
 ## Documentation
 ### 0. Setup
-Though it is useful to understand the underlying structure behind this code, we and the team before us have written our own code to streamline the programming of the servos. This section will cover how we controlled the servos using the previous teams code as well as our own additions to their code. We will start with a brief overview of the previous team's functions and how we used them. For documentation of the previous team's code, please visit this [link](https://github.com/chenson399/poppy-sdk).
+Though it is useful to understand the underlying structure behind this code, the team before us has written code to streamline the programming of the servos. This section will cover how we controlled the servos using the previous teams code. We will start with a brief overview of the previous team's functions and how we used them. For documentation of the previous team's code, please visit this [link](https://github.com/chenson399/poppy-sdk).
 
 We made full use of the suite of functions written by the previous team in [poppy_servo_control.py](https://github.com/nborrego/poppy-sdk-legs/blob/master/src/poppy_servo_control.py) during development. To start, we created a Poppy object with following code:
 
@@ -131,7 +131,7 @@ poppyMove.poppy_body_gesture()
 
 This ```poppyMove``` object is used to be able to run functions in main.
 
-The poppy_body_gesture class is the class written by the Poppy Social Robotics SDK team. This class initializes the USB COM port as well as a dictionary of servo IDs corresponding to a descriptive name of its physical position on Poppy for easier calling in functions. One of the most used functions within this class is the ```move_servo``` function. This streamlines the process of moving a servo at a certain speed to a certain position. Here is an example of usage within the class as well as using the dictionary for servo IDs:
+The poppy_body_gesture class is the class written by the Poppy Social Robotics SDK team. This class initializes the USB COM port as well as a dictionary of servo IDs corresponding to a descriptive name of its physical position on Poppy for easier calling in functions. It is recommended that any new servos are added to this dictionary as they are integrated One of the most used functions within this class is the ```move_servo``` function. This streamlines the process of moving a servo at a certain speed to a certain position. Here is an example of usage within the class as well as using the dictionary for servo IDs:
 
 ```python
 servo_speed = 50
@@ -143,4 +143,27 @@ This is how all the movement of the servos is done. Writing these line by line c
 ### 1. New Functions in Poppy SDK Legs
 This SDK contains many new functions focused on legs functionality for Poppy. This section will cover each function.
 
-#### 
+#### ```set_right_leg_to_neutral(self)```
+
+This function sets the right leg of Poppy to a neutral, standing straight up position.
+
+#### ```set_left_leg_to_neutral(self)```
+
+This function sets the left leg of Poppy to a neutral, standing straight up position.
+
+#### ```set_legs_to_neutral(self)```
+
+This function sets both of Poppy's legs to neutral at the same time.
+
+#### ```set_to_squat(self)```
+
+This function runs a squat routine for Poppy.
+
+#### ```set_body_neutral(self)```
+
+This function sets the entirety of Poppy to a neutral, standing straight up position with arms at its sides. This is the default position for Poppy, all movements begin from this position.
+
+### ```main```
+
+The main in poppy_servo_control.py **is not** the true main for the overall SDK. This main should only be used to test and develop movement of the servos.
+
