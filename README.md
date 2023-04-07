@@ -143,26 +143,26 @@ This is how all the movement of the servos is done. Writing these line by line c
 ### 1. New Functions in Poppy SDK Legs
 This SDK contains many new functions focused on legs functionality for Poppy. This section will cover each function.
 
-#### set_right_leg_to_neutral(self)
+#### ```set_right_leg_to_neutral(self)```
 
 This function sets the right leg of Poppy to a neutral, standing straight up position.
 
-#### set_left_leg_to_neutral(self)
+#### ```set_left_leg_to_neutral(self)```
 
 This function sets the left leg of Poppy to a neutral, standing straight up position.
 
-#### set_legs_to_neutral(self)
+#### ```set_legs_to_neutral(self)```
 
 This function sets both of Poppy's legs to neutral at the same time.
 
-#### set_to_squat(self)
+#### ```set_to_squat(self)```
 
 This function runs a squat routine for Poppy.
 
-#### set_body_neutral(self)
+#### ```set_body_neutral(self)```
 
 This function sets the entirety of Poppy to a neutral, standing straight up position with arms at its sides. This is the default position for Poppy, all movements begin from this position.
 
-### main
+### ```main```
 
 The main in poppy_servo_control.py **is not** the true main for the overall SDK. This main should only be used to test and develop movement of the servos.
