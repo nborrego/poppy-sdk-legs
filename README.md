@@ -141,7 +141,11 @@ self.move_servo(self.servo_ids['left_shoulder'], -45, servo_speed)
 This is how all the movement of the servos is done. Writing these line by line can take a lot of time and can be tedious. Thanks to the last team, however, there is a function to streamline this process. We made use of the ```pose_generator()``` function they made which will print to console these ```self.move_servo()``` lines with the servo IDs and current position of the servo filled in, as well as a servo_speed placeholder. Using this function, all we needed to do was to set Poppy to the desired position with physical or Wizard manipulation of the servos, and then while holding Poppy in that postion, call ```poppyMove.pose_generator()``` to get a print out of the required code to reach the desired position. This allowed us to rapidly try out different positions of Poppy.
 
 ### 1. New Functions in Poppy SDK Legs
-This SDK contains many new functions focused on legs functionality for Poppy. This section will cover each function.
+This SDK contains many new functions focused on legs functionality for Poppy. The new functions are found in **poppy_sero_control.py**.
+
+#### ```goalPos(n)```
+
+This is a simple function to quickly convert angles between the Wizard and Python without having to do the math yourself. ```n``` is the goal position in the Wizard, and the function will return the converted angle that will work in Python.
 
 #### ```set_right_leg_to_neutral(self)```
 
@@ -163,6 +167,17 @@ This function runs a squat routine for Poppy.
 
 This function sets the entirety of Poppy to a neutral, standing straight up position with arms at its sides. This is the default position for Poppy, all movements begin from this position.
 
-### ```main```
+#### ```main```
 
 The main in poppy_servo_control.py **is not** the true main for the overall SDK. This main should only be used to test and develop movement of the servos.
+
+### 2. Common Issues Troubleshooting and Tips
+This section will cover some common issues we ran into and their solution.
+
++ Sometimes, you may find that a servo no longer responds. This _usually_ happens when a motor is trying to move to a position and gets blocked, usually by a cord or a piece of Poppy. Generally a motor will screech to tip you off when this is happening but not always. If a motor gives out and no longer responds (the motor is swinging freely), then the motor is more than likely overloaded. You can confirm this by connecting to the motor in the Dynamixel Wizard, clicking on the offending motor, and checking the alarms at the bottom of the Wizard. If you see the "Overload" alarm lit up red and counting up then this is your issue. To solve this issue, you need to disconnect and reconnect the power to the servo. We did this by just unplugging the power brick from the [SMPS2Dynamixel](https://www.robotis.us/smps2dynamixel/) and replugging it. Of course this kills power to all the servos causing them to go free, so be ready to catch Poppy!
+  + We commonly had this issue with the old knees due to the weight of the upper body bearing down on the knee MX28 servos causing them to buckle and stop responding. This issue also appeared when incorrectly inputting angles to set servos to, causing them to go just slightly too far which caused resistance. The servos are not very good when met with resistance and like to get overloaded and go free.
+  + This is the most common issue we had during the project.
++ When you input an angle and go to test the servo, you may observe that the servo begins moving in the expected direction, but suddenly switches direction and goes the other way. This is likely due to the servos inability to cross between 0&deg; and 360&deg; (based on the Wizard). When adding new servos to Poppy, you should try to pay attention to how much room you need the servo to swing, and within the swing path, make sure that the boundary will not be in that path. Unfortunately, we did not realize this initially so a few existing servos may run into this issue, sorry!
++ If you are trying to upload code to the servos but are getting permission errors, you probably did not click the disconnect button in the Wizard. You cannot have the Wizard connected to the motors at the same time you try to upload code from a Python IDE. You will likely forget about this when going back and forth between the two, and it will annoy you.
+
+
