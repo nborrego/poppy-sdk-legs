@@ -163,6 +163,10 @@ This function sets both of Poppy's legs to neutral at the same time.
 
 This function runs a squat routine for Poppy.
 
+#### ```set_to_shuffle(self)```
+
+This function has Poppy do a shuffle walk.
+
 #### ```set_body_neutral(self)```
 
 This function sets the entirety of Poppy to a neutral, standing straight up position with arms at its sides. This is the default position for Poppy, all movements begin from this position.

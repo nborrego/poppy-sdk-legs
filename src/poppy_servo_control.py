@@ -92,8 +92,8 @@ class poppy_body_gesture():
         print('servo_speed = 100')
 
         for i in range(len(self.position_list)):
-            if keys[i] != 'left_inner_shoulder' and keys[i] != 'right_inner_shoulder': # Exclude shoulders as we are freeing them
-                print(f"self.move_servo(self.servo_ids['{keys[i]}'],{self.position_list[i]}, servo_speed)")
+            #if keys[i] != 'left_inner_shoulder' and keys[i] != 'right_inner_shoulder': # Exclude shoulders as we are freeing them
+            print(f"self.move_servo(self.servo_ids['{keys[i]}'],{self.position_list[i]}, servo_speed)")
 
     def set_to_idle_position(self):
         """
@@ -278,12 +278,12 @@ class poppy_body_gesture():
         if left_hand:
             self.move_servo(self.servo_ids['left_inner_shoulder'], -93.58, servo_speed)
             self.move_servo(self.servo_ids['left_outer_shoulder'], 33.54, servo_speed)
-            self.move_servo(self.servo_ids['left_bicep'], 1.89, servo_speed)
+            self.move_servo(self.servo_ids['left_bicep'], 45.41, servo_speed)
             self.move_servo(self.servo_ids['left_elbow'], -66.77, servo_speed)
         if right_hand:
             self.move_servo(self.servo_ids['right_inner_shoulder'], 89.36, servo_speed)
             self.move_servo(self.servo_ids['right_outer_shoulder'], -23.87, servo_speed)
-            self.move_servo(self.servo_ids['right_bicep'], -2.15, servo_speed)
+            self.move_servo(self.servo_ids['right_bicep'], 4.79, servo_speed)
             self.move_servo(self.servo_ids['right_elbow'], 65.8, servo_speed)
         time.sleep(1)
 
@@ -297,7 +297,7 @@ class poppy_body_gesture():
                 time.sleep(.25)
                 self.move_servo(self.servo_ids['left_elbow'], -66.77, servo_speed)
             time.sleep(.25)
-        self.set_to_neutral()
+        #self.set_to_neutral()
 
     def set_to_confused(self):
         """
@@ -563,47 +563,207 @@ class poppy_body_gesture():
         self.move_servo(self.servo_ids['back_top_pelvis'], -77.43, servo_speed)
         #time.sleep(1)
 
-    def set_to_squat(self):
+    def set_to_squat(self, stand_up):
         '''
         By: Nathan Borrego
         Sets Poppy to a squat
         :return:
         '''
+        servo_speed = 75
+        self.move_servo(self.servo_ids['right_ankle'], -68.79, servo_speed)
+        self.move_servo(self.servo_ids['left_ankle'], -111.34, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -73.8, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 16.13, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], -10.95, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_hip'], -90.51, servo_speed)
+
         servo_speed = 100
-        self.move_servo(self.servo_ids['torso_base'], goalPos(42.80), servo_speed)
-        #self.move_servo(self.servo_ids['left_inner_shoulder'], goalPos(139.31), servo_speed)
-        self.move_servo(self.servo_ids['left_bicep'], goalPos(181.58), servo_speed)
-        self.move_servo(self.servo_ids['left_elbow'], goalPos(180.18), servo_speed)
-        #self.move_servo(self.servo_ids['right_inner_shoulder'], goalPos(218.14), servo_speed)
-        self.move_servo(self.servo_ids['right_bicep'], goalPos(178.07), servo_speed)
-        self.move_servo(self.servo_ids['right_elbow'], goalPos(179.91), servo_speed)
-        self.move_servo(self.servo_ids['neck_left_right'], goalPos(187.03), servo_speed)
-        self.move_servo(self.servo_ids['neck_up_down'], goalPos(179.91), servo_speed)
-        self.move_servo(self.servo_ids['right_ankle'], goalPos(102.74), servo_speed)
-        self.move_servo(self.servo_ids['right_knee'], goalPos(198.54), servo_speed)
-        self.move_servo(self.servo_ids['left_bottom_hip'], goalPos(75.23), servo_speed)
-        self.move_servo(self.servo_ids['left_top_hip'], goalPos(131.04), servo_speed)
-        self.move_servo(self.servo_ids['left_ankle'], goalPos(37.53), servo_speed)
-        self.move_servo(self.servo_ids['left_knee'], goalPos(55), servo_speed)  # goalPos(47.37)
-        self.move_servo(self.servo_ids['right_bottom_hip'], goalPos(185.63), servo_speed)
-        self.move_servo(self.servo_ids['right_top_hip'], goalPos(56.25), servo_speed)
-        self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(63.02), servo_speed)
-        self.move_servo(self.servo_ids['left_bottom_pelvis'], goalPos(124.31), servo_speed)  # goalPos(123.31)
-        self.move_servo(self.servo_ids['back_top_pelvis'], goalPos(102.57), servo_speed)
+        self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -2, servo_speed)
+        self.move_servo(self.servo_ids['left_inner_shoulder'], -26.59, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], 32.31, servo_speed)
+        self.move_servo(self.servo_ids['left_outer_shoulder'], 76.18, servo_speed)
+        self.move_servo(self.servo_ids['right_outer_shoulder'], -77.23, servo_speed)
+        self.move_servo(self.servo_ids['left_bicep'], 45.58, servo_speed)
+        self.move_servo(self.servo_ids['right_bicep'], 4.7, servo_speed)
+        self.move_servo(self.servo_ids['left_elbow'], -0.13, servo_speed)
+        self.move_servo(self.servo_ids['right_elbow'], 0.4, servo_speed)
+        self.move_servo(self.servo_ids['forward_top_pelvis'], -33.1, servo_speed)
+        self.move_servo(self.servo_ids['back_top_pelvis'], -77.76, servo_speed)
 
-        self.move_servo(self.servo_ids['left_inner_shoulder'], goalPos(201), servo_speed) # goalPos(197.14)
-        self.move_servo(self.servo_ids['right_inner_shoulder'], goalPos(158.5), servo_speed) # goalPos(162.51)
+        time.sleep(5)
 
-        servo_speed = 80
-        time.sleep(.5)
-        self.move_servo(self.servo_ids['left_inner_shoulder'], goalPos(112.60), 150)  # goalPos(139.31)
-        self.move_servo(self.servo_ids['right_inner_shoulder'], goalPos(245.014), 150)  # goalPos(218.14)
-        self.move_servo(self.servo_ids['chest_tilt_forward_backward'], goalPos(178.33), servo_speed)
-        self.move_servo(self.servo_ids['chest_tilt_left_right'], goalPos(180.79), servo_speed)
-        self.move_servo(self.servo_ids['forward_top_pelvis'], goalPos(129.08), servo_speed)
+        if stand_up:
+            # Stand up
+            servo_speed = 100
+            self.move_servo(self.servo_ids['chest_tilt_forward_backward'], goalPos(184.39), servo_speed)  # more positive is backwards
+            self.move_servo(self.servo_ids['forward_top_pelvis'], goalPos(159.96), servo_speed)
+            time.sleep(.1)
+            self.move_servo(self.servo_ids['left_inner_shoulder'],  15, servo_speed) # more positive
+            self.move_servo(self.servo_ids['right_inner_shoulder'], -5, servo_speed)  # more negative
+            self.move_servo(self.servo_ids['left_ankle'], -125.41, servo_speed)
+            self.move_servo(self.servo_ids['right_ankle'], -52.53, servo_speed)
+            self.move_servo(self.servo_ids['left_knee'], -8.92, servo_speed)
+            self.move_servo(self.servo_ids['right_knee'], -102.11, servo_speed)
+
+            # Legs
+            self.move_servo(self.servo_ids['left_bottom_hip'], -77.05, servo_speed)
+            self.move_servo(self.servo_ids['right_bottom_hip'], -25.63, servo_speed)
+            self.move_servo(self.servo_ids['left_top_hip'], -51.65, servo_speed)
+            self.move_servo(self.servo_ids['right_top_hip'], -124.44, servo_speed)
+            self.move_servo(self.servo_ids['left_bottom_pelvis'], goalPos(50.54), servo_speed)  # -57.8
+            self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(62.31), servo_speed)  # -118.02
+            self.move_servo(self.servo_ids['back_top_pelvis'], -75.21, servo_speed)
+
+            # Upper body
+            self.move_servo(self.servo_ids['left_inner_shoulder'], -3.38, servo_speed)
+            self.move_servo(self.servo_ids['right_inner_shoulder'], 12.53, servo_speed)
+            self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -1.19, servo_speed)
+            self.move_servo(self.servo_ids['torso_base'], -136.4, servo_speed)
+            self.move_servo(self.servo_ids['chest_tilt_left_right'], -1.63, servo_speed)
+            self.move_servo(self.servo_ids['left_outer_shoulder'], 74.77, servo_speed)
+            self.move_servo(self.servo_ids['right_outer_shoulder'], -75.74, servo_speed)
+            self.move_servo(self.servo_ids['left_bicep'], 45.41, servo_speed)
+            self.move_servo(self.servo_ids['right_bicep'], 4.79, servo_speed)
+            self.move_servo(self.servo_ids['left_elbow'], -0.04, servo_speed)
+            self.move_servo(self.servo_ids['right_elbow'], 0.4, servo_speed)
+            self.move_servo(self.servo_ids['neck_left_right'], 10.24, servo_speed)
+            self.move_servo(self.servo_ids['neck_up_down'], 0.31, servo_speed)
+
+            self.set_body_to_neutral(False)
+
+    def set_to_shuffle(self):
+        '''
+        By: Nathan Borrego
+        :return:
+        '''
+        servo_speed = 150
+
+        # Right leg
+        self.dxl_io.disable_torque([self.servo_ids['right_ankle'], self.servo_ids['left_elbow'], self.servo_ids['right_elbow']])
+        self.move_servo(self.servo_ids['left_bottom_hip'],-65.32, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], goalPos(171.56), servo_speed)
+        self.move_servo(self.servo_ids['right_top_hip'], -124.0, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], goalPos(105.64), servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(58.89), servo_speed) # -116.79
+        self.move_servo(self.servo_ids['forward_top_pelvis'], -26.87, servo_speed)  # -26
+        self.move_servo(self.servo_ids['back_top_pelvis'],-74.95, servo_speed)
+
+        self.move_servo(self.servo_ids['left_inner_shoulder'], -20.38, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], -10.53, servo_speed)
+
+        self.move_servo(self.servo_ids['left_bottom_hip'], -77.32, servo_speed)
+        self.move_servo(self.servo_ids['left_top_hip'],-51.47, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 0.75, servo_speed)
+        self.move_servo(self.servo_ids['left_ankle'],-115.74, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_pelvis'],-130.95, servo_speed)
+
+        print(self.get_servo_position(self.servo_ids['right_ankle']))
+        while self.get_servo_position(self.servo_ids['right_ankle']) >= goalPos(112):
+            print(self.get_servo_position(self.servo_ids['right_ankle']))
+        self.dxl_io.enable_torque([self.servo_ids['right_ankle']])
+
+        self.move_servo(self.servo_ids['torso_base'],-136.57, servo_speed)
+        self.move_servo(self.servo_ids['left_outer_shoulder'], 74.86, servo_speed)
+        self.move_servo(self.servo_ids['right_outer_shoulder'], -76.18, servo_speed)
 
         time.sleep(1)
-        #self.set_body_to_neutral()
+        self.move_servo(self.servo_ids['left_inner_shoulder'], -3.91, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], 12.14, servo_speed)
+        time.sleep(1)
+
+        # Left leg
+        self.dxl_io.disable_torque([self.servo_ids['left_ankle']])
+        servo_speed = 50
+        self.move_servo(self.servo_ids['left_inner_shoulder'], 20.91, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], 43.14, servo_speed)
+        servo_speed = 120
+        self.move_servo(self.servo_ids['right_knee'], -92.11, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 18, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], -25.63, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_hip'], -93.05, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_pelvis'], goalPos(52.54), servo_speed)  # -57.8
+        self.move_servo(self.servo_ids['chest_tilt_left_right'], -5, servo_speed)
+
+        print(self.get_servo_position(self.servo_ids['left_ankle']))
+        while self.get_servo_position(self.servo_ids['left_ankle']) >= goalPos(80):
+            print(self.get_servo_position(self.servo_ids['left_ankle']))
+        self.dxl_io.enable_torque([self.servo_ids['left_ankle']])
+
+        self.move_servo(self.servo_ids['right_ankle'], goalPos(118.56), servo_speed)
+
+        time.sleep(1)
+        servo_speed = 20
+        self.move_servo(self.servo_ids['forward_top_pelvis'], -21, servo_speed)
+        time.sleep(1)
+        servo_speed = 120
+
+        # Right leg
+        self.dxl_io.disable_torque([self.servo_ids['right_ankle']])
+        self.move_servo(self.servo_ids['left_bottom_hip'], -65.32, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], goalPos(161.56), servo_speed)
+        self.move_servo(self.servo_ids['right_top_hip'], -124.0, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -85, servo_speed)  # 92 neutral
+
+        # self.move_servo(self.servo_ids['right_ankle'], goalPos(115.93), servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(58.89), servo_speed)  # -116.79
+
+        self.move_servo(self.servo_ids['back_top_pelvis'], -74.95, servo_speed)
+
+        self.move_servo(self.servo_ids['left_outer_shoulder'], 74.77, servo_speed)
+        self.move_servo(self.servo_ids['right_outer_shoulder'], -75.74, servo_speed)
+        self.move_servo(self.servo_ids['left_inner_shoulder'], 0.38, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], 15.53, servo_speed)
+
+        self.move_servo(self.servo_ids['left_bottom_hip'], -77.32, servo_speed)
+        self.move_servo(self.servo_ids['left_top_hip'], -51.47, servo_speed)
+        self.move_servo(self.servo_ids['left_knee'], 0.75, servo_speed)
+        self.move_servo(self.servo_ids['left_ankle'], -120.74, servo_speed)  # -115.74 is neutral
+        self.move_servo(self.servo_ids['left_bottom_pelvis'], -130.95, servo_speed)
+
+        self.dxl_io.enable_torque([self.servo_ids['right_ankle']])
+
+        self.move_servo(self.servo_ids['torso_base'], -136.57, servo_speed)
+        self.move_servo(self.servo_ids['chest_tilt_left_right'], -1.63, servo_speed)
+
+
+
+        time.sleep(1)
+        self.move_servo(self.servo_ids['left_inner_shoulder'], -3.38, servo_speed)
+        self.move_servo(self.servo_ids['right_inner_shoulder'], 12.53, servo_speed)
+
+        # Legs
+        servo_speed = 50
+        #self.move_servo(self.servo_ids['left_knee'], 0.92, servo_speed)
+        #self.move_servo(self.servo_ids['right_knee'], -92.11, servo_speed)
+        time.sleep(.2)
+        self.move_servo(self.servo_ids['left_ankle'], goalPos(63.02), servo_speed)
+        self.move_servo(self.servo_ids['right_ankle'], goalPos(118.56), servo_speed)
+        time.sleep(.2)
+
+        servo_speed = 100
+        self.move_servo(self.servo_ids['left_bottom_hip'], -72.05, servo_speed)  # -77
+        self.move_servo(self.servo_ids['right_bottom_hip'], -30.63, servo_speed)  # -25
+        self.move_servo(self.servo_ids['forward_top_pelvis'], -30.04, servo_speed)
+        time.sleep(.2)
+        self.move_servo(self.servo_ids['left_top_hip'], -51.65, servo_speed)
+        self.move_servo(self.servo_ids['right_top_hip'], -124.44, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_pelvis'], goalPos(50.54), servo_speed)  # -57.8
+        self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(62.31), servo_speed)  # -118.02
+        self.move_servo(self.servo_ids['back_top_pelvis'], -75.21, servo_speed)
+
+        # Upper body
+        self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -1.19, servo_speed)
+        self.move_servo(self.servo_ids['torso_base'], -136.4, servo_speed)
+        self.move_servo(self.servo_ids['chest_tilt_left_right'], -1.63, servo_speed)
+        self.move_servo(self.servo_ids['left_outer_shoulder'], 74.77, servo_speed)
+        self.move_servo(self.servo_ids['right_outer_shoulder'], -75.74, servo_speed)
+        self.move_servo(self.servo_ids['left_bicep'], 45.41, servo_speed)
+        self.move_servo(self.servo_ids['left_elbow'], -0.04, servo_speed)
+        self.move_servo(self.servo_ids['right_bicep'], 4.79, servo_speed)
+        self.move_servo(self.servo_ids['right_elbow'], 0.4, servo_speed)
+        self.move_servo(self.servo_ids['neck_left_right'], 10.24, servo_speed)
+        self.move_servo(self.servo_ids['neck_up_down'], 0.31, servo_speed)
+
 
     def set_body_to_neutral(self, arms_free):
         '''
@@ -616,32 +776,40 @@ class poppy_body_gesture():
         if arms_free:
             self.dxl_io.disable_torque([self.servo_ids['right_inner_shoulder'], self.servo_ids['left_inner_shoulder']])
         else:
-            self.move_servo(self.servo_ids['left_inner_shoulder'], -3.03, servo_speed)
-            self.move_servo(self.servo_ids['right_inner_shoulder'], 2.59, servo_speed)
+            self.move_servo(self.servo_ids['left_inner_shoulder'], -3.38, servo_speed)
+            self.move_servo(self.servo_ids['right_inner_shoulder'], 12.53, servo_speed)
 
-        self.move_servo(self.servo_ids['left_ankle'], -125.8, servo_speed)  # -127.44
-        self.move_servo(self.servo_ids['right_ankle'], -54.8, servo_speed)  # -58.7
-        self.move_servo(self.servo_ids['left_knee'], -178.42, servo_speed)
-        self.move_servo(self.servo_ids['right_knee'], -34.5, servo_speed)
-        self.move_servo(self.servo_ids['right_bottom_hip'], -26.98, servo_speed)
-        self.move_servo(self.servo_ids['left_bottom_hip'], -74.79, servo_speed)
-        self.move_servo(self.servo_ids['right_top_hip'], -123.49, servo_speed)  # This one is weird, if it is too far off, default angle does not work
-        self.move_servo(self.servo_ids['left_top_hip'], goalPos(126.83), servo_speed)  # -49.34
-        self.move_servo(self.servo_ids['right_bottom_pelvis'], -117.95, servo_speed)
-        self.move_servo(self.servo_ids['left_bottom_pelvis'], -55.99, servo_speed)
-        self.move_servo(self.servo_ids['forward_top_pelvis'], -34.01, servo_speed)
-        self.move_servo(self.servo_ids['back_top_pelvis'], -77.43, servo_speed)
-        self.move_servo(self.servo_ids['torso_base'], -137.02, servo_speed)  # Changed neutral from prior base value
-        self.move_servo(self.servo_ids['chest_tilt_left_right'], .97, servo_speed)
-        self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -.79, servo_speed)
-        self.move_servo(self.servo_ids['neck_left_right'], 7.56, servo_speed)
-        self.move_servo(self.servo_ids['neck_up_down'], .35, servo_speed)  # 60.25
-        self.move_servo(self.servo_ids['left_outer_shoulder'], 79.16, servo_speed)
-        self.move_servo(self.servo_ids['left_bicep'], 1.45, servo_speed)
-        self.move_servo(self.servo_ids['left_elbow'], .44, servo_speed)
-        self.move_servo(self.servo_ids['right_outer_shoulder'], -82.77, servo_speed)
-        self.move_servo(self.servo_ids['right_bicep'], -1.63, servo_speed)
-        self.move_servo(self.servo_ids['right_elbow'], .26, servo_speed)
+        # Legs
+        servo_speed = 50
+        self.move_servo(self.servo_ids['left_knee'], 0.92, servo_speed)
+        self.move_servo(self.servo_ids['right_knee'], -92.11, servo_speed)
+        time.sleep(.2)
+        self.move_servo(self.servo_ids['left_ankle'], goalPos(63.02), servo_speed)
+        self.move_servo(self.servo_ids['right_ankle'], goalPos(118.56), servo_speed)
+        time.sleep(.2)
+
+        servo_speed = 100
+        self.move_servo(self.servo_ids['left_bottom_hip'], -77.05, servo_speed)
+        self.move_servo(self.servo_ids['right_bottom_hip'], -25.63, servo_speed)
+        self.move_servo(self.servo_ids['left_top_hip'], -51.65, servo_speed)
+        self.move_servo(self.servo_ids['right_top_hip'], -124.44, servo_speed)
+        self.move_servo(self.servo_ids['left_bottom_pelvis'], goalPos(50.54), servo_speed)  # -57.8
+        self.move_servo(self.servo_ids['right_bottom_pelvis'], goalPos(62.31), servo_speed)  # -118.02
+        self.move_servo(self.servo_ids['forward_top_pelvis'], -32.04, servo_speed)
+        self.move_servo(self.servo_ids['back_top_pelvis'], -75.21, servo_speed)
+
+        # Upper body
+        self.move_servo(self.servo_ids['chest_tilt_forward_backward'], -1.19, servo_speed)
+        self.move_servo(self.servo_ids['torso_base'], -136.4, servo_speed)
+        self.move_servo(self.servo_ids['chest_tilt_left_right'], -1.63, servo_speed)
+        self.move_servo(self.servo_ids['left_outer_shoulder'], 74.77, servo_speed)
+        self.move_servo(self.servo_ids['right_outer_shoulder'], -75.74, servo_speed)
+        self.move_servo(self.servo_ids['left_bicep'], 45.41, servo_speed)
+        self.move_servo(self.servo_ids['left_elbow'], -0.04, servo_speed)
+        self.move_servo(self.servo_ids['right_bicep'], 4.79, servo_speed)
+        self.move_servo(self.servo_ids['right_elbow'], 0.4, servo_speed)
+        self.move_servo(self.servo_ids['neck_left_right'], 10.24, servo_speed)
+        self.move_servo(self.servo_ids['neck_up_down'], 0.31, servo_speed)
 
 
 if __name__ == '__main__':
@@ -649,6 +817,14 @@ if __name__ == '__main__':
 
     poppyMove = poppy_body_gesture()
 
+    poppyMove.pose_generator()
+
     time.sleep(1)
     poppyMove.set_body_to_neutral(False)
-    time.sleep(5)
+    time.sleep(1)
+    poppyMove.set_to_shuffle()
+    time.sleep(.5)
+    #poppyMove.set_body_to_neutral(False)
+    time.sleep(.1)
+    poppyMove.set_to_wave_one_hand(True, False)
+    poppyMove.set_body_to_neutral(False)
